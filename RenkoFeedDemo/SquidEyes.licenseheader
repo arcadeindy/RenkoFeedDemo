@@ -1,6 +1,7 @@
 ﻿extensions: designer.cs generated.cs
 extensions: .cs
 #region Copyright and Author Details
+// Project: %Project%, Namespace: %Namespace%
 // Copyright (C) %CurrentYear% SquidEyes, LLC.
 // Written by Louis S. Berman <louis@squideyes.com>, %CurrentMonth%/%CurrentDay%/%CurrentYear%
 
@@ -25,6 +26,7 @@ extensions: .cs
 
 extensions: .xml .config .xsd
 <!--
+Project: %Project%, Namespace: %Namespace%
 Copyright (C) %CurrentYear% SquidEyes, LLC.
 Written by Louis S. Berman <louis@squideyes.com>, %CurrentMonth%/%CurrentDay%/%CurrentYear%
 

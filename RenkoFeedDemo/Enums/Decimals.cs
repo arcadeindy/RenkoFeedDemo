@@ -1,4 +1,5 @@
 ﻿#region Copyright and Author Details
+// Project: RenkoFeedDemo, Namespace: RenkoFeedDemo
 // Copyright (C) 2016 SquidEyes, LLC.
 // Written by Louis S. Berman <louis@squideyes.com>, 4/26/2016
 

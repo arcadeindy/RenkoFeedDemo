@@ -103,7 +103,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="RenkoFeedDemo.licenseheader" />
+    <None Include="SquidEyes.licenseheader" />
     <None Include="TickData\AUDUSD.csv" />
     <None Include="TickData\EURUSD.csv" />
     <None Include="TickData\GBPUSD.csv" />
