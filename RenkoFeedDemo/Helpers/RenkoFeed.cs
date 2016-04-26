@@ -36,6 +36,8 @@ namespace RenkoFeedDemo
         private Decimals decimals;
         private double brickTicks;
 
+        public event EventHandler<GenericArgs<Brick>> OnBrick;
+
         public RenkoFeed(double brickTicks, Decimals decimals)
         {
             // validate!!!!!!!
@@ -62,11 +64,9 @@ namespace RenkoFeedDemo
             {
                 lastRate = Math.Round(lastRate + brickTicks, 5);
 
-                var brick = new Brick(decimals, openOn, tick.TickOn)
-                {
-                    OpenRate = Math.Round(lastRate - brickTicks / 2, 5),
-                    CloseRate = Math.Round(lastRate + brickTicks / 2, 5)
-                };
+                var brick = new Brick(openOn, tick.TickOn,
+                    Math.Round(lastRate - brickTicks / 2, 5),
+                    Math.Round(lastRate + brickTicks / 2, 5));
 
                 AddAndRaiseBrick(brick);
 
@@ -77,11 +77,9 @@ namespace RenkoFeedDemo
             {
                 lastRate = Math.Round(lastRate - brickTicks, 5);
 
-                var brick = new Brick(decimals, openOn, tick.TickOn)
-                {
-                    OpenRate = Math.Round(lastRate + brickTicks / 2, 5),
-                    CloseRate = Math.Round(lastRate - brickTicks / 2, 5)
-                };
+                var brick = new Brick(openOn, tick.TickOn,
+                    Math.Round(lastRate + brickTicks / 2, 5),
+                    Math.Round(lastRate - brickTicks / 2, 5));
 
                 AddAndRaiseBrick(brick);
 
@@ -92,6 +90,8 @@ namespace RenkoFeedDemo
         private void AddAndRaiseBrick(Brick brick)
         {
             bricks.Add(brick);
+
+            OnBrick?.Invoke(this, new GenericArgs<Brick>(brick));
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

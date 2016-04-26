@@ -70,6 +70,7 @@
     <Compile Include="Enums\Decimals.cs" />
     <Compile Include="Enums\Symbol.cs" />
     <Compile Include="Enums\Trend.cs" />
+    <Compile Include="EventArgs\GenericArgs.cs" />
     <Compile Include="Extenders\MiscExtenders.cs" />
     <Compile Include="Helpers\RenkoFeed.cs" />
     <Compile Include="MainWindow.xaml.cs">

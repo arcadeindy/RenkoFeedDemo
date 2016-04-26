@@ -27,20 +27,19 @@ namespace RenkoFeedDemo
 {
     public class Brick
     {
-        internal Brick(Decimals decimals, 
-            DateTime? openOn, DateTime closeOn)
+        internal Brick(DateTime? openOn, DateTime closeOn,
+            double openRate, double closeRate)
         {
-            Decimals = decimals;
             OpenOn = openOn.Value;
             CloseOn = closeOn;
+            OpenRate = openRate;
+            CloseRate = closeRate;
         }
 
-        public Decimals Decimals { get; }
         public DateTime OpenOn { get; }
         public DateTime CloseOn { get;}
-
-        public double OpenRate { get; internal set; }
-        public double CloseRate { get; internal set; }
+        public double OpenRate { get; }
+        public double CloseRate { get;}
 
         public Trend Trend => (OpenRate < CloseRate) ?
             Trend.Rising : Trend.Falling;
@@ -48,15 +47,12 @@ namespace RenkoFeedDemo
         public override string ToString()
         {
             return string.Format(
-                "{0} to {1} on {2}: Open: {3}, Close: {4}",
-                OpenOn.ToTimeString(), 
-                CloseOn.ToTimeString(),
-                OpenOn.ToDateString(),
-                OpenRate.ToRateString(Decimals),
-                CloseRate.ToRateString(Decimals));
+                "{0} to {1} on {2}, Open: {3}, Close: {4}",
+                OpenOn.ToTimeString(), CloseOn.ToTimeString(),
+                OpenOn.ToDateString(), OpenRate, CloseRate);
         }
 
-        public string ToBarCsv()
+        public string ToCsvBar()
         {
             double highRate;
             double lowRate;
