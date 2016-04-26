@@ -1,0 +1,28 @@
+﻿<Window x:Class="RenkoFeedDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:s="http://schemas.abtsoftware.co.uk/scichart"
+        Title="RenkoFeed Demo"
+        Height="480"
+        Width="800"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="32" />
+        </Grid.RowDefinitions>
+        <s:SciStockChart x:Name="stockChart"
+                         s:ThemeManager.Theme="BlackSteel"
+                         IsRolloverEnabled="False">
+            <s:SciStockChart.RenderableSeries>
+                <s:FastCandlestickRenderableSeries AntiAliasing="False" />
+            </s:SciStockChart.RenderableSeries>
+        </s:SciStockChart>
+        <s:SciChartOverview Grid.Row="1"
+                            ParentSurface="{Binding ElementName=stockChart}"
+                            DataSeries="{Binding ElementName=stockChart, Path=RenderableSeries[0].DataSeries}"
+                            SelectedRange="{Binding ElementName=stockChart, Path=XAxis.VisibleRange, Mode=TwoWay}"
+                            s:ThemeManager.Theme="BlackSteel">
+        </s:SciChartOverview>
+    </Grid>
+</Window>
