@@ -27,8 +27,8 @@ namespace RenkoFeedDemo
 {
     public class Tick
     {
-        public DateTime TickOn { get; set; }
-        public double BidRate { get; set; }
-        public double AskRate { get; set; }
+        public DateTime TickOn { get; internal set; }
+        public double BidRate { get; internal set; }
+        public double AskRate { get; internal set; }
     }
 }

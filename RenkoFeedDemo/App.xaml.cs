@@ -53,7 +53,7 @@ namespace RenkoFeedDemo
             {
                 var message = $"The license file couldn't be loaded (Error: {error.Message}).";
 
-                MessageBox.Show(message, "Missing License",
+                MessageBox.Show(message, "Missing License File",
                     MessageBoxButton.OK, MessageBoxImage.Warning);
 
                 Shutdown();
