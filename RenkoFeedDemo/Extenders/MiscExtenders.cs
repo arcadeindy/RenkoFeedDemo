@@ -27,6 +27,13 @@ namespace RenkoFeedDemo
 {
     public static class MiscExtenders
     {
+        public static double PipsToRate(this double value, Decimals decimals)
+        {
+            var factor = (decimals == Decimals.Five ? 10000.0 : 100.0);
+
+            return Math.Round(value / factor, (int)decimals);
+        }
+
         public static string ToDateString(this DateTime value) =>
             value.ToString("MM/dd/yyyy");
 

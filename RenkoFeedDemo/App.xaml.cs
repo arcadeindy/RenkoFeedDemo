@@ -30,7 +30,7 @@ namespace RenkoFeedDemo
 {
     public partial class App : Application
     {
-        protected override void OnStartup(StartupEventArgs e)
+        protected override void OnStartup(StartupEventArgs sea)
         {
             const string FILENAME = "SciChartLicense.xml";
 
@@ -44,10 +44,6 @@ namespace RenkoFeedDemo
                     key = reader.ReadToEnd();
 
                 SciChartSurface.SetLicenseKey(key);
-
-                var window = new MainWindow();
-
-                window.Show();
             }
             catch (Exception error)
             {
@@ -58,6 +54,20 @@ namespace RenkoFeedDemo
 
                 Shutdown();
             }
+
+            DispatcherUnhandledException += (s, e) =>
+            {
+                MessageBox.Show(e.Exception.Message, "Unhandled Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+
+                e.Handled = true;
+
+                Shutdown();
+            };
+
+            var window = new MainWindow();
+
+            window.Show();
         }
     }
 }

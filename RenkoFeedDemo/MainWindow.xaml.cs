@@ -24,64 +24,84 @@
 using Abt.Controls.SciChart.Model.DataSeries;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Windows;
+using System.Linq;
 
 namespace RenkoFeedDemo
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
+        private Symbol symbol;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public MainWindow()
         {
             InitializeComponent();
 
-            try
+            DataContext = this;
+
+            Symbols = Enum.GetValues(typeof(Symbol)).Cast<Symbol>().ToList();
+
+            Symbol = Symbol.EURUSD;
+        }
+
+        public List<Symbol> Symbols { get; }
+
+        public Symbol Symbol
+        {
+            get
             {
-                var ticks = LoadTicks(Symbol.EURUSD);
-
-                var feed = new RenkoFeed(0.0004, Decimals.Five);
-
-                foreach (var tick in ticks)
-                    feed.HandleTick(tick);
-
-                var dataSeries = new OhlcDataSeries<DateTime, double>();
-
-                foreach (var brick in feed)
-                {
-                    double highRate;
-                    double lowRate;
-
-                    if (brick.Trend == Trend.Rising)
-                    {
-                        highRate = brick.CloseRate;
-                        lowRate = brick.OpenRate;
-                    }
-                    else
-                    {
-                        highRate = brick.OpenRate;
-                        lowRate = brick.CloseRate;
-                    }
-
-                    dataSeries.Append(brick.OpenOn, brick.OpenRate,
-                        highRate, lowRate, brick.CloseRate);
-                }
-
-                stockChart.RenderableSeries[0].DataSeries = dataSeries;
-
-                stockChart.ZoomExtents();
-
-                DataContext = this;
+                return symbol;
             }
-            catch (Exception error)
+            set
             {
-                MessageBox.Show(error.Message, "Error",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
+                symbol = value;
+
+                PropertyChanged?.Invoke(this, 
+                    new PropertyChangedEventArgs(nameof(Symbol)));
+
+                LoadBricks(Symbol);
             }
         }
 
-        private Queue<Tick> LoadTicks(Symbol symbol)
+        private void LoadBricks(Symbol symbol)
         {
-            var ticks = new Queue<Tick>();
+            var ticks = GetTicks(symbol);
+
+            var decimals = (symbol == Symbol.USDJPY) ? Decimals.Three : Decimals.Five;
+
+            var feed = new RenkoFeed(3.2, decimals);
+
+            foreach (var tick in ticks)
+                feed.HandleTick(tick);
+
+            var dataSeries = new OhlcDataSeries<DateTime, double>();
+
+            foreach (var brick in feed)
+            {
+                if (brick.Trend == Trend.Rising)
+                {
+                    dataSeries.Append(brick.OpenOn, brick.OpenRate,
+                        brick.CloseRate, brick.OpenRate, brick.CloseRate);
+                }
+                else
+                {
+                    dataSeries.Append(brick.OpenOn, brick.OpenRate,
+                        brick.OpenRate, brick.CloseRate, brick.CloseRate);
+                }
+            }
+
+            chart.RenderableSeries[0].DataSeries = dataSeries;
+
+            chart.ZoomExtents();
+        }
+
+        private List<Tick> GetTicks(Symbol symbol)
+        {
+            var ticks = new List<Tick>();
 
             string data;
 
@@ -117,7 +137,7 @@ namespace RenkoFeedDemo
                 {
                     var fields = line.Split(',');
 
-                    ticks.Enqueue(new Tick()
+                    ticks.Add(new Tick()
                     {
                         TickOn = DateTime.ParseExact(fields[1],
                             "MM/dd/yyyy HH:mm:ss.fff", null),

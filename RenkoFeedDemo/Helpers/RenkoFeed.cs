@@ -38,11 +38,16 @@ namespace RenkoFeedDemo
 
         public event EventHandler<GenericArgs<Brick>> OnBrick;
 
-        public RenkoFeed(double brickTicks, Decimals decimals)
+        public RenkoFeed(double brickPips, Decimals decimals)
         {
-            // validate!!!!!!!
+            if ((brickPips < 0.1) || (brickPips > 99.9) ||
+                (brickPips != Math.Round(brickPips, 1)))
+            {
+                throw new ArgumentOutOfRangeException(nameof(brickPips));
+            }
 
-            this.brickTicks = brickTicks;
+            brickTicks = brickPips.PipsToRate(decimals);
+
             this.decimals = decimals;
         }
 

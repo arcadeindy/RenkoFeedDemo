@@ -6,23 +6,25 @@
         Height="480"
         Width="800"
         WindowStartupLocation="CenterScreen">
-    <Grid Margin="8">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="32" />
-        </Grid.RowDefinitions>
-        <s:SciStockChart x:Name="stockChart"
+    <DockPanel Margin="8">
+        <ComboBox DockPanel.Dock="Top"
+                  Margin="0,0,0,4"
+                  ItemsSource="{Binding Symbols}"
+                  SelectedItem="{Binding Symbol, Mode=TwoWay}" />
+        <s:SciChartOverview Grid.Row="1"
+                            Height="32"
+                            DockPanel.Dock="Bottom"
+                            ParentSurface="{Binding ElementName=chart}"
+                            DataSeries="{Binding ElementName=chart, Path=RenderableSeries[0].DataSeries}"
+                            SelectedRange="{Binding ElementName=chart, Path=XAxis.VisibleRange, Mode=TwoWay}"
+                            s:ThemeManager.Theme="BlackSteel">
+        </s:SciChartOverview>
+        <s:SciStockChart x:Name="chart"
                          s:ThemeManager.Theme="BlackSteel"
                          IsRolloverEnabled="False">
             <s:SciStockChart.RenderableSeries>
                 <s:FastCandlestickRenderableSeries AntiAliasing="False" />
             </s:SciStockChart.RenderableSeries>
         </s:SciStockChart>
-        <s:SciChartOverview Grid.Row="1"
-                            ParentSurface="{Binding ElementName=stockChart}"
-                            DataSeries="{Binding ElementName=stockChart, Path=RenderableSeries[0].DataSeries}"
-                            SelectedRange="{Binding ElementName=stockChart, Path=XAxis.VisibleRange, Mode=TwoWay}"
-                            s:ThemeManager.Theme="BlackSteel">
-        </s:SciChartOverview>
-    </Grid>
+    </DockPanel>
 </Window>
