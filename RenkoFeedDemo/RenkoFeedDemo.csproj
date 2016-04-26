@@ -115,16 +115,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="3rdParty\SciChart\Abt.Controls.SciChart.Wpf.dll" />
-    <Content Include="3rdParty\SciChart\Abt.Controls.SciChart3D.Wpf.dll" />
-    <Content Include="3rdParty\SciChart\D3DCompiler_43.dll" />
-    <Content Include="3rdParty\SciChart\D3DX10_43.dll" />
-    <Resource Include="3rdParty\SciChart\SciChartLicense.xml" />
-    <Content Include="3rdParty\SciChart\SharpDX.D3DCompiler.dll" />
-    <Content Include="3rdParty\SciChart\SharpDX.Direct2D1.dll" />
-    <Content Include="3rdParty\SciChart\SharpDX.Direct3D10.dll" />
-    <Content Include="3rdParty\SciChart\SharpDX.Direct3D9.dll" />
-    <Content Include="3rdParty\SciChart\SharpDX.dll" />
-    <Content Include="3rdParty\SciChart\SharpDX.DXGI.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
