@@ -40,8 +40,6 @@ namespace RenkoFeedDemo
         public DateTime CloseOn { get;}
 
         public double OpenRate { get; internal set; }
-        public double HighRate { get; internal set; }
-        public double LowRate { get; internal set; }
         public double CloseRate { get; internal set; }
 
         public Trend Trend => (OpenRate < CloseRate) ?
@@ -50,22 +48,34 @@ namespace RenkoFeedDemo
         public override string ToString()
         {
             return string.Format(
-                "{0} to {1} on {2}: {3}, {4}, {5}, {6}",
+                "{0} to {1} on {2}: Open: {3}, Close: {4}",
                 OpenOn.ToTimeString(), 
                 CloseOn.ToTimeString(),
                 OpenOn.ToDateString(),
                 OpenRate.ToRateString(Decimals),
-                HighRate.ToRateString(Decimals),
-                LowRate.ToRateString(Decimals),
                 CloseRate.ToRateString(Decimals));
         }
 
-        public string ToCsvString()
+        public string ToBarCsv()
         {
+            double highRate;
+            double lowRate;
+
+            if (Trend == Trend.Rising)
+            {
+                highRate = CloseRate;
+                lowRate = OpenRate;
+            }
+            else
+            {
+                highRate = OpenRate;
+                lowRate = CloseRate;
+            }
+
             return string.Format("{0},{1},{2},{3},{4},{5}",
                 OpenOn.ToDateTimeString(),
                 CloseOn.ToDateTimeString(),
-                OpenRate, HighRate, LowRate, CloseRate);
+                OpenRate, highRate, lowRate, CloseRate);
         }
     }
 }

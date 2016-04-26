@@ -48,8 +48,22 @@ namespace RenkoFeedDemo
 
                 foreach (var brick in feed)
                 {
+                    double highRate;
+                    double lowRate;
+
+                    if (brick.Trend == Trend.Rising)
+                    {
+                        highRate = brick.CloseRate;
+                        lowRate = brick.OpenRate;
+                    }
+                    else
+                    {
+                        highRate = brick.OpenRate;
+                        lowRate = brick.CloseRate;
+                    }
+
                     dataSeries.Append(brick.OpenOn, brick.OpenRate,
-                        brick.HighRate, brick.LowRate, brick.CloseRate);
+                        highRate, lowRate, brick.CloseRate);
                 }
 
                 stockChart.RenderableSeries[0].DataSeries = dataSeries;
@@ -60,7 +74,7 @@ namespace RenkoFeedDemo
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message, "Error", 
+                MessageBox.Show(error.Message, "Error",
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

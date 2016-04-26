@@ -62,13 +62,11 @@ namespace RenkoFeedDemo
             {
                 lastRate = Math.Round(lastRate + brickTicks, 5);
 
-                var brick = new Brick(decimals, openOn, tick.TickOn);
-
-                brick.OpenRate = brick.LowRate =
-                    Math.Round(lastRate - brickTicks / 2, 5);
-
-                brick.HighRate = brick.CloseRate =
-                    Math.Round(lastRate + brickTicks / 2, 5);
+                var brick = new Brick(decimals, openOn, tick.TickOn)
+                {
+                    OpenRate = Math.Round(lastRate - brickTicks / 2, 5),
+                    CloseRate = Math.Round(lastRate + brickTicks / 2, 5)
+                };
 
                 AddAndRaiseBrick(brick);
 
@@ -79,13 +77,11 @@ namespace RenkoFeedDemo
             {
                 lastRate = Math.Round(lastRate - brickTicks, 5);
 
-                var brick = new Brick(decimals, openOn, tick.TickOn);
-
-                brick.OpenRate = brick.HighRate =
-                    Math.Round(lastRate + brickTicks / 2, 5);
-
-                brick.LowRate = brick.CloseRate =
-                    Math.Round(lastRate - brickTicks / 2, 5);
+                var brick = new Brick(decimals, openOn, tick.TickOn)
+                {
+                    OpenRate = Math.Round(lastRate + brickTicks / 2, 5),
+                    CloseRate = Math.Round(lastRate - brickTicks / 2, 5)
+                };
 
                 AddAndRaiseBrick(brick);
 
